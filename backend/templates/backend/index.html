@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+<body>
+
+<h1>JOB SEARCH</h1>
+<button type="button" onclick="myFunction()">Get me a muthafuckin job fam</button>
+<br><br>
+<table id="demo"></table>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xhttp.open("GET", "jobData.json", true);
+  xhttp.send();
+}
+function myFunction() {
+  var i;
+  var jsonDoc = JSON.parse('{{ jobList | escapejs }}');
+  console.log(jsonDoc);
+  var table="<tr><th>Job</th><th>Company</th><th>Description</th></tr>";
+  for (i = 0; i <jsonDoc.length; i++) { 
+    table += `<tr>
+        <td>`+jsonDoc[i].jobName+`</td>
+        <td>`+jsonDoc[i].company+`</td>
+        <td>`+jsonDoc[i].jobDescription+`</td>
+        <tr>`;
+  }
+  document.getElementById("demo").innerHTML = table;
+}
+</script>
+
+</body>
+</html>
